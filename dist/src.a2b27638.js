@@ -176,54 +176,30 @@ module.hot.accept(reloadCSS);
 "use strict";
 
 require("./index.css");
-function validateExists(value) {
-  return value && value.trim();
-}
-function performSearch(formData) {
-  var articleTitles = document.querySelectorAll("article h2");
-  var filteredArticles = Array.from(articleTitles).filter(function (articleTitle) {
-    var title = articleTitle.innerHTML;
-    return title.toLowerCase().includes(formData.get("searchTerm").toLowerCase());
-  });
-
-  // Show only filtered articles
-  articleTitles.forEach(function (articleTitle) {
-    articleTitle.parentNode.classList.add("hidden");
-  });
-  filteredArticles.forEach(function (articleTitle) {
-    articleTitle.parentNode.classList.remove("hidden");
-  });
-}
-function validateForm(formData) {
-  // Check if seach term was entered
-
-  if (!validateExists(formData.get("searchTerm"))) {
+var searchForm = document.querySelector("#searchForm");
+var searchTerm = document.querySelector("#searchTerm");
+var articleTitles = document.querySelectorAll("article > h2");
+searchForm.addEventListener("submit", function (event) {
+  // Event handling code goes here
+  event.preventDefault();
+  if (searchTerm.value.trim() === "") {
     var newDiv = document.createElement("div");
-    newDiv.classList.add("error");
     newDiv.id = "searchError";
+    newDiv.classList.add("error");
     var content = "Please enter a search term";
     newDiv.innerHTML = content;
-
-    // Append to the form element
-    document.querySelector("#searchForm").appendChild(newDiv);
-  } else {
-    performSearch(formData);
+    searchForm.appendChild(newDiv);
   }
-}
-var searchHandler = function searchHandler(event) {
-  event.preventDefault();
-  var form = event.target;
-  var formData = new FormData(form);
-  validateForm(formData);
-};
-var main = function main() {
-  // Get the form element
-  var form = document.querySelector("#searchForm");
 
-  // Attach the search handler
-  form.addEventListener("submit", searchHandler);
-};
-window.addEventListener("DOMContentLoaded", main);
+  // Other code goes here
+  articleTitles.forEach(function (articleTitle) {
+    if (!articleTitle.innerHTML.toLowerCase().includes(searchTerm.value.toLowerCase())) {
+      articleTitle.parentNode.classList.add("hidden");
+    } else {
+      articleTitle.parentNode.classList.remove("hidden");
+    }
+  });
+});
 },{"./index.css":"src/index.css"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -249,7 +225,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59225" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57660" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];
