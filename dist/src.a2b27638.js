@@ -118,30 +118,54 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 
   return newRequire;
 })({"src/index.js":[function(require,module,exports) {
-var searchForm = document.querySelector("#searchForm");
-var searchTerm = document.querySelector("#searchTerm");
-var articleTitles = document.querySelectorAll("article > h2");
-searchForm.addEventListener("submit", function (event) {
-  // Event handling code goes here
-  event.preventDefault();
-  if (searchTerm.value.trim() === "") {
+function validateExists(value) {
+  return value && value.trim();
+}
+function performSearch(formData) {
+  var articleTitles = document.querySelectorAll("article h2");
+  var filteredArticles = Array.from(articleTitles).filter(function (articleTitle) {
+    var title = articleTitle.innerHTML;
+    return title.toLowerCase().includes(formData.get("searchTerm").toLowerCase());
+  });
+
+  // Show only filtered articles
+  articleTitles.forEach(function (articleTitle) {
+    articleTitle.parentNode.classList.add("hidden");
+  });
+  filteredArticles.forEach(function (articleTitle) {
+    articleTitle.parentNode.classList.remove("hidden");
+  });
+}
+function validateForm(formData) {
+  // Check if seach term was entered
+
+  if (!validateExists(formData.get("searchTerm"))) {
     var newDiv = document.createElement("div");
-    newDiv.id = "searchError";
     newDiv.classList.add("error");
+    newDiv.id = "searchError";
     var content = "Please enter a search term";
     newDiv.innerHTML = content;
-    searchForm.appendChild(newDiv);
-  }
 
-  // Other code goes here
-  articleTitles.forEach(function (articleTitle) {
-    if (!articleTitle.innerHTML.toLowerCase().includes(searchTerm.value.toLowerCase())) {
-      articleTitle.parentNode.classList.add("hidden");
-    } else {
-      articleTitle.parentNode.classList.remove("hidden");
-    }
-  });
-});
+    // Append to the form element
+    document.querySelector("#searchForm").appendChild(newDiv);
+  } else {
+    performSearch(formData);
+  }
+}
+var searchHandler = function searchHandler(event) {
+  event.preventDefault();
+  var form = event.target;
+  var formData = new FormData(form);
+  validateForm(formData);
+};
+var main = function main() {
+  // Get the form element
+  var form = document.querySelector("#searchForm");
+
+  // Attach the search handler
+  form.addEventListener("submit", searchHandler);
+};
+window.addEventListener("DOMContentLoaded", main);
 },{}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
