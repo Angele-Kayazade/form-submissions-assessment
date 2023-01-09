@@ -1,7 +1,6 @@
 node_modules/
-.cache/
 docs/
 dist/
-jest.config.test
+jest.config.js
 package-lock.json
 
