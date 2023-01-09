@@ -1,1 +1,7 @@
-node_modules
+node_modules/
+.cache/
+docs/
+dist/
+jest.config.test
+package-lock.json
+
