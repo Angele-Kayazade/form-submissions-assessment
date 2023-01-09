@@ -139,6 +139,9 @@ function performSearch(formData) {
 function validateForm(formData) {
   // Check if seach term was entered
 
+  // Remove error message div if it exists
+  var errorDiv = document.querySelector("#searchError");
+  if (errorDiv) errorDiv.remove();
   if (!validateExists(formData.get("searchTerm"))) {
     var newDiv = document.createElement("div");
     newDiv.classList.add("error");
@@ -191,7 +194,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57660" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54457" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

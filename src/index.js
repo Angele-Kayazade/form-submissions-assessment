@@ -21,8 +21,14 @@ function performSearch(formData) {
 function validateForm(formData) {
   // Check if seach term was entered
   
+  // Remove error message div if it exists
+  const errorDiv = document.querySelector("#searchError");
+  if (errorDiv) errorDiv.remove();
+
   
   if (!validateExists(formData.get("searchTerm"))) {
+
+    
     const newDiv = document.createElement("div");
     newDiv.classList.add("error");
     newDiv.id = "searchError";
