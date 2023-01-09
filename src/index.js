@@ -1,5 +1,3 @@
-import "./index.css";
-
 const searchForm = document.querySelector("#searchForm");
 const searchTerm = document.querySelector("#searchTerm");
 const articleTitles = document.querySelectorAll("article > h2");
